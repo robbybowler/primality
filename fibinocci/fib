@@ -1,0 +1,51 @@
+#include <vector>
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+
+void bubble_sort( std::vector<int>& data ) {
+
+  size_t i, j;
+  bool changed = false;
+  for( i = 0; i < data.size( ); i++ ) {
+    changed = false;
+    for( j = i; j < data.size( ) - 1; j++ ) {
+      if( data[ j ] > data[ j + 1 ] ) {
+        std::swap( data[ j ], data[ j + 1 ] );
+        changed = true;
+      }
+    }
+    if( !changed ) {
+      break;
+    }
+  }
+
+}
+
+int main( ) {
+  std::srand( std::time( 0 ) );
+
+  std::vector< std::vector< int > > data;
+  int i, j;
+  int reps = 10;
+  int N = 80000;
+  for( j = 0; j < reps; j ++ ) {
+    data.push_back( std::vector< int >( ) );
+    for( i = 0; i < N; i++ ) {
+      data[ j ].push_back( std::rand( ) % 1000000 );
+    }
+  }
+
+  clock_t t0 = std::clock( );
+
+  for( j = 0; j < reps; j ++ ) {
+    bubble_sort( data[ j ] );
+  }
+
+  clock_t t1 = std::clock( );
+  double dt = ((double)(t1 - t0)) / CLOCKS_PER_SEC;
+  std::cout << N << "," << dt / reps << std::endl;
+
+  return 0;
+}
